@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> </script>
+	    <style>
+	        #container{
+	            display:flex;
+	            flex-direction:column;
+	            align-items:center;
+	        }
+	    </style>
+	</head>
+
+	<body>
+    	<div id = container>
+    	    <button id = change-background>Change Background Color</button>
+    	    <p>Enter three different background colors!</p>
+    	    <p>Be sure to re-Run the code each time! That way you can see if the backgrounds save, and if the last three color list has changed!</p>
+    	    <p id = last-three></p>
+    	</div>
+		
+		<script>
+		    $("#change-background").click(function(){
+		        let color = prompt("What color would you like to change your background color the next time you visit the site?");
+		        //If the list exists already, add the new color
+		        if(localStorage.backgroundList)
+		        {
+		            //Parse localStorage list back to list object
+		            let colorList = JSON.parse(localStorage.backgroundList);
+		            colorList.push(color);
+		            //Notice that we have to re-stringify after parsing
+		            localStorage.backgroundList = JSON.stringify(colorList);
+		        }
+		        //If the list doesn't exist yet, create a list of one value, and add to local Storage
+		        else
+		        {
+		            let list = [color];
+		            localStorage.backgroundList = JSON.stringify(list);
+		        }
+		        //Change the background color
+		        $("body").css("background-color", color);
+		    });
+		    //If the list exists, make the body the LAST color added to the list 
+		    if(localStorage.backgroundList)
+		    {
+		        let colorList = JSON.parse(localStorage.backgroundList);
+		        $("body").css("background-color", colorList[colorList.length - 1]);
+		        //If the list has at least three values, update the last three color choices 
+		        if(colorList.length >= 3)
+		        {
+		            $("#last-three").text("Your last three background choices were: "
+		            + colorList[colorList.length - 1] + ", "
+		            + colorList[colorList.length - 2] + ", "
+		            + colorList[colorList.length - 3]);
+		        }
+		    }
+		</script>
+	</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>        
+	    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> </script>
+		<style>
+                             button
+            {
+                border-radius: 25px;
+                background-color: lightgray;
+                color: white;
+                font-weight: bold;
+                font-size: 16px;
+                cursor:pointer;
+                padding: 15px;
+                transition: background-color 1s ease-out;
+            }
+            hr
+            {
+                width:100%;
+            }
+		    button:hover{
+                background-color: green;
+            }
+            button:focus
+            {
+                outline: none;
+            }
+            #container, #previous-scores
+            {
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+            }
+		</style>
+	</head>
+
+	<body>
+
+	    <div id = container>
+	        <h2>Your Score Tracker</h2>
+            <button id = record-score>Record a score!</button>
+            <p id = latest-score></p>
+            <p id = max-score>Max Score:</p>
+            <hr>
+        </div>
+        <div id = "previous-scores"></div>
+
+        <script>
+            let scores = []
+
+            function updateScore(){
+                let latestScore = scores[scores.length-1]
+                $('#latest-score').text("Latest Score: " + latestScore.score + " on " + latestScore.date)
+            
+                $('#previous-scores').empty()
+
+                let listel = document.createElement("ul")
+                document.getElementById("previous-scores").appendChild(listel)
+                for(let i = 0; i<scores.length; i++){
+                    var point = document.createElement("li")
+                    point.innerText="Previous Score: " + scores[i].score + " on " + scores[i].date
+                    document.getElementsByTagName("ul")[0].appendChild(point)
+                }
+                for(let a = 0; a<scores.length; a++){
+                    let max = ""
+                    let mdate = ""
+                    if(scores[i].score > max){
+                        max = scores[i]
+                        mdate = scores[i].date
+                    }
+                }
+                document.getElementById("max-score: " +max + " on " + mdate)
+            }
+
+            $('#record-score').click(function(){
+                let score = prompt("What is your score");
+                let date = new Date().toLocaleDateString();
+                scores.push({score:score, date:date});
+
+                updateScore();
+            });
+           
+
+        </script>
+
+	</body>
+
+</html>
