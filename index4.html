@@ -61,15 +61,11 @@
                     point.innerText="Previous Score: " + scores[i].score + " on " + scores[i].date
                     document.getElementsByTagName("ul")[0].appendChild(point)
                 }
-                for(let a = 0; a<scores.length; a++){
-                    let max = ""
-                    let mdate = ""
-                    if(scores[i].score > max){
-                        max = scores[i]
-                        mdate = scores[i].date
-                    }
-                }
-                document.getElementById("max-score: " +max + " on " + mdate)
+
+                let maxScore = Math.max(...scores.map(s => parseInt(s.score)));
+                let maxScoreEntry = scores.find(s => parseInt(s.score) === maxScore);
+                $('#max-score').text("Max Score: " + maxScoreEntry.score + " on " + maxScoreEntry.date);
+                
             }
 
             $('#record-score').click(function(){
